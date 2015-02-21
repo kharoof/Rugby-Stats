@@ -42,3 +42,4 @@ p <- ggplot(results, aes(factor(year), pts.diff))
 p + geom_boxplot() + scale_x_discrete(breaks=c(seq(1995,2015, 4)))
 ## Add a facet_wrap
 p + geom_point() + scale_x_discrete(breaks=c(seq(1995,2015, 4))) + facet_wrap(~opponent)
+p + geom_point(aes(colour=win.lose)) + scale_x_discrete(breaks=c(seq(1995,2015, 4))) + facet_wrap(~opponent)
