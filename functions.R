@@ -9,13 +9,17 @@ cleanResults <- function(data, team){
   names(data) <- c("date", "time.local", "home.team", "away.team", "score", "venue","url", "home.score", "away.score")
   data$date = as.Date(data$date, "%d/%m/%Y")
   data$opponent <- ifelse(data$home.team==team, data$away.team, data$home.team)
+  data$opponent <- as.factor(data$opponent)
   data$home.away <- ifelse(data$home.team==team, "Home", "Away")
+  data$home.away <- as.factor(data$home.away)
   data$pts.diff <- ifelse(data$home.team==team, data$home.score - data$away.score,data$away.score - data$home.score)
+  data$team.score <- ifelse(data$home.team==team, data$home.score ,data$away.score )
+  data$opponent.score <- ifelse(data$home.team==team, data$away.score ,data$home.score )
   data$year <- as.ordered(year(data$date))
   data$month <- as.ordered(month(data$date))
   data$win.lose <- as.factor(ifelse(data$pts.diff>0 , "Win",ifelse(data$pts.diff<0 , "Lose","Draw" ) ))
   data$team <- team
-  keep = c("date", "year", "month","time.local", "team", "opponent", "pts.diff", "home.away", "win.lose", "url")
+  keep = c("date", "year", "month","time.local", "team", "opponent", "pts.diff", "home.away", "win.lose", "url","opponent.score", "team.score")
   data <- data[,keep]
   return(data)
 }
